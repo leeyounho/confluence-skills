@@ -1,7 +1,7 @@
 {
   "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
   "name": "confluence-docs",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Confluence 편집기에 붙여넣을 문서를 HTML과 Markdown으로 작성합니다.",
   "author": { "name": "leeyounho" },
   "repository": "https://github.com/leeyounho/confluence-skills",

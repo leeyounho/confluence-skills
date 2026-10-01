@@ -2,6 +2,7 @@
 import argparse
 import json
 import re
+import subprocess
 import zipfile
 from pathlib import Path
 
@@ -47,13 +48,22 @@ def validate(tag=None):
 
 
 def archive_folder(folder, destination):
+    tracked = subprocess.check_output(
+        ['git', 'ls-files', '-z'], cwd=ROOT
+    ).decode('utf-8').split('\0')
     with zipfile.ZipFile(destination, 'w', zipfile.ZIP_DEFLATED) as archive:
-        for path in sorted(folder.rglob('*')):
-            if path.is_file():
+        for relative in sorted(name for name in tracked if name):
+            path = ROOT / relative
+            if '.confluence-docs' in path.parts or path.name == 'confluence-docs.config.json':
+                continue
+            if path.is_file() and path.is_relative_to(folder):
                 archive.write(path, path.relative_to(folder.parent).as_posix())
     with zipfile.ZipFile(destination) as archive:
         if archive.testzip() is not None:
             raise ValueError('ZIP integrity check failed')
+        expected = folder.name + ('/SKILL.md' if folder.name == 'confluence-doc-writer' else '/plugin.json')
+        if expected not in archive.namelist():
+            raise ValueError('Package entrypoint is missing; stage new distribution files with git add first')
 
 
 def main():

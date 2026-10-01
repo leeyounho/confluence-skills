@@ -45,6 +45,48 @@ Confluence 문서 작성 스킬을 사용해 이 메모로 붙여넣기용 HTML�
 
 수동 ZIP 설치본은 GitHub 수정만으로 자동 갱신되지 않습니다. 플러그인 설치본과 동일한 스킬을 중복 설치하지 마세요.
 
+## 원하는 템플릿 추가
+
+템플릿과 스킬을 따로 보관하면 집에서 스킬을 개발하고 회사에서는 회사 양식을 추가해 쓸 수 있습니다. 스킬 업데이트로 사용자 양식을 덮어쓰지 않습니다.
+
+회사 작업 폴더에 다음처럼 둡니다. `.md`는 UTF-8 Markdown이며 HTML 양식도 사용할 수 있습니다.
+
+```text
+회사-작업폴더/
+├── confluence-docs.config.json
+└── .confluence-docs/
+    └── templates/
+        ├── operations.md
+        └── meeting.md
+```
+
+`confluence-docs.config.example.json`을 작업 폴더에 `confluence-docs.config.json`으로 복사하고 기본 양식을 지정합니다. `template_root`는 설정 파일 기준 상대 경로 또는 절대 경로입니다.
+
+```json
+{
+  "template_root": "./.confluence-docs/templates",
+  "default_template": "operations.md"
+}
+```
+
+`operations.md`를 실제로 해당 폴더에 넣어야 합니다. 시작할 때는 `plugins/confluence-docs/skills/confluence-doc-writer/assets/templates/`의 예시를 복사해서 수정할 수 있습니다. 제목과 목차, 표를 만들고 채울 곳에 `{{목적}}`, `{{담당자}}`처럼 자리표시자를 씁니다. 자리표시자 없이 작성된 기존 문서도 양식으로 지정할 수 있습니다.
+
+```text
+Confluence 문서 작성 스킬을 사용해 operations 템플릿으로 이 메모를 정리해줘.
+```
+
+설정 없이 파일 경로를 바로 지정할 수도 있습니다.
+
+```text
+Confluence 문서 작성 스킬을 사용해 D:/CompanyTemplates/운영절차서.md 양식으로 작성해줘.
+```
+
+요청에서 지정한 양식이 기본 설정보다 우선합니다. 양식의 목차·표·고정 문구를 유지하며 자료가 없는 값은 `확인 필요`로 표시합니다. 지정 파일을 찾을 수 없으면 임의의 양식으로 대체하지 않습니다.
+
+**집에서는 공개 스킬과 일반 예시를 관리하고, 회사 양식은 회사의 로컬 폴더나 승인된 내부 저장소에서 관리합니다.** 이 저장소는 `.confluence-docs/`와 실제 `confluence-docs.config.json`을 Git에서 제외합니다. 다른 프로젝트에서도 해당 제외 규칙을 적용해야 합니다. 경로나 설정 파일만으로 회사 파일이 다른 컴퓨터에 동기화되지는 않습니다.
+
+Claude 웹/앱에서는 해당 세션에 양식 파일을 첨부해 지정합니다. 로컬 폴더 설정이 웹 환경에 자동 적용되지는 않습니다.
+
 ## 문서 사용
 
 1. 메모나 파일을 제공하고 문서 작성을 요청합니다.
@@ -73,11 +115,12 @@ codex plugin marketplace upgrade confluence-skills
 
 ## 유지보수 및 배포
 
-스킬 원본은 `plugins/confluence-docs/skills/confluence-doc-writer/`에 있습니다. 스킬 수정 후 두 플러그인 manifest의 버전을 동일하게 올립니다.
+스킬 원본은 `plugins/confluence-docs/skills/confluence-doc-writer/`에 있습니다. 스킬 수정 후 두 플러그인 manifest의 버전을 동일하게 올립니다. ZIP에는 Git에 추적된 배포 파일만 들어가므로 새 공개 파일을 먼저 추가합니다. 개인 템플릿 폴더와 실제 설정은 ZIP에서도 제외합니다.
 
 ```text
-python scripts/package.py
 git add .
+python -m unittest discover -s tests
+python scripts/package.py
 git commit -m "Release 1.0.1"
 git push origin main
 git tag v1.0.1

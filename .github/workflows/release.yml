@@ -19,7 +19,7 @@ jobs:
   validate:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - name: Validate and build packages
         run: python3 scripts/package.py
 
@@ -32,7 +32,7 @@ jobs:
     env:
       RELEASE_TAG: ${{ inputs.tag || github.ref_name }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - name: Validate release version and build packages
         run: python3 scripts/package.py --tag "$RELEASE_TAG"
       - name: Publish release assets

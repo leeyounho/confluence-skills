@@ -1,0 +1,11 @@
+{
+  "name": "confluence-skills",
+  "owner": { "name": "leeyounho" },
+  "plugins": [
+    {
+      "name": "confluence-docs",
+      "source": "./plugins/confluence-docs",
+      "description": "Confluence용 문서 작성 스킬"
+    }
+  ]
+}

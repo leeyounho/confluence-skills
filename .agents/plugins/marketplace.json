@@ -1,0 +1,12 @@
+{
+  "name": "confluence-skills",
+  "interface": { "displayName": "Confluence Skills" },
+  "plugins": [
+    {
+      "name": "confluence-docs",
+      "source": { "source": "local", "path": "./plugins/confluence-docs" },
+      "policy": { "installation": "AVAILABLE", "authentication": "ON_INSTALL" },
+      "category": "Productivity"
+    }
+  ]
+}

@@ -58,6 +58,28 @@ class SelectionAndIntakeTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             templates.select('없는양식', self.root, {})
 
+    def test_focused_meeting_selection_and_readiness(self):
+        for name in ('주요 안건 회의록', '핵심 안건 회의록', '안건별 상세 회의록', 'meeting-focused.md'):
+            with self.subTest(name=name):
+                self.assertEqual(templates.select(name, self.root, {})['id'], 'meeting-focused')
+        self.assertEqual(templates.select('회의록', self.root, {})['id'], 'meeting')
+        selected = templates.select('주요 안건 회의록', self.root, {})
+        state = {'sections': {
+            '회의 정보': {'status': 'confirmed', 'content': '일시와 참석자 확인'},
+            '논의 요점': {'status': 'confirmed', 'content': '안건 A와 B의 논의 자료 확인'},
+        }}
+        self.assertEqual(templates.readiness(selected, state)['blockers'], ['결정 사항', '후속 작업'])
+        state['sections'].update({
+            '결정 사항': {'status': 'agreed_pending', 'content': 'A의 결정과 B의 결정 미정 표현을 사용자 확인'},
+            '후속 작업': {'status': 'confirmed', 'content': 'A와 B의 모든 작업·담당·기한 확인'},
+        })
+        self.assertTrue(templates.readiness(selected, state)['ready'])
+        state['sections']['결정 사항'] = {'status': 'unresolved', 'content': 'B 결정의 새 답변이 충돌'}
+        self.assertEqual(templates.readiness(selected, state)['blockers'], ['결정 사항'])
+        local = self.root / 'meeting-focused.md'
+        local.write_text('Company-specific agenda template', encoding='utf-8')
+        self.assertEqual(Path(templates.select('주요 안건 회의록', self.root, {})['path']), local)
+
     def test_config_resolves_relative_to_config_not_process_directory(self):
         path = self.root / 'config.json'
         path.write_text(json.dumps({'template_root': 'company', 'template_aliases': {'완료보고': '완료.md'}}), encoding='utf-8')

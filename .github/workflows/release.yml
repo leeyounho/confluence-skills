@@ -20,7 +20,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
-      - name: Check template tools, HTML output and private file exclusion
+      - name: Check template tools, document output, copying and private file exclusion
         run: python3 -m unittest discover -s tests
       - name: Validate and build packages
         run: python3 scripts/package.py

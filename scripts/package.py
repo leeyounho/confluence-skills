@@ -41,9 +41,9 @@ def validate(tag=None):
         fields = dict(line.split(': ', 1) for line in match[1].splitlines())
         if fields['name'] != skill.name or not fields.get('description'):
             raise ValueError('Invalid skill metadata')
-        for relative in re.findall(r'\]\((references/[^)]+)\)', text):
+        for relative in re.findall(r'\]\(((?:references|scripts|assets)/[^)]+)\)', text):
             if not (skill / relative).is_file():
-                raise ValueError(f'Missing reference: {relative}')
+                raise ValueError(f'Missing skill resource: {relative}')
     return manifest['version']
 
 

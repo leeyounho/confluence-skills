@@ -1,8 +1,8 @@
 {
   "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
   "name": "confluence-docs",
-  "version": "1.4.0",
-  "description": "Confluence HTML 소스 입력용 본문 조각과 수정용 Markdown을 작성합니다.",
+  "version": "1.5.0",
+  "description": "템플릿 선택과 대화로 Confluence 본문 HTML을 작성·검사하고 문서 일부를 수정합니다.",
   "author": { "name": "leeyounho" },
   "repository": "https://github.com/leeyounho/confluence-skills",
   "license": "MIT"

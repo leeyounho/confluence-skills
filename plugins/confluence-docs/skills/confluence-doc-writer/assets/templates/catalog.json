@@ -1,0 +1,59 @@
+{
+  "schema_version": 1,
+  "templates": [
+    {
+      "id": "completion-report",
+      "name": "완료보고",
+      "file": "completion-report.md",
+      "aliases": ["완료 보고", "완료보고서"],
+      "sections": [
+        {"name": "summary", "mode": "derived", "criteria": "확인된 배경·효과·추진내용·향후계획에서 요약한다. summary 자체를 별도로 질문하지 않는다."},
+        {"name": "배경", "mode": "required", "criteria": "추진 계기와 기존 문제 또는 목표가 분명하다."},
+        {"name": "효과", "mode": "required", "criteria": "실측·정성 평가·기대 효과를 구분한다. 수치가 있을 때만 비교 기준·기간·단위를 확인한다. 효과를 아직 확인하지 못했다면 그 상태와 표현에 합의한다."},
+        {"name": "추진내용", "mode": "required", "criteria": "실제 수행 작업, 산출물, 완료 범위와 남은 작업 여부를 확인한다."},
+        {"name": "향후계획", "mode": "required", "criteria": "계획 있음·없음·미정 중 상태를 확인한다. 계획이 있을 때만 담당·일정을 확인하며 미정인 값은 표현에 합의한다."}
+      ]
+    },
+    {
+      "id": "operations",
+      "name": "운영 절차서",
+      "file": "operations.md",
+      "aliases": ["운영절차서", "운영 절차", "작업 절차서"],
+      "sections": [
+        {"name": "목적", "mode": "required", "criteria": "작업 목적이 분명하다."},
+        {"name": "적용 대상", "mode": "required", "criteria": "대상 시스템·환경과 적용 범위를 확인한다."},
+        {"name": "사전 조건", "mode": "required", "criteria": "실행에 필요한 권한·준비 사항을 확인한다. 별도 조건이 없으면 없음을 확인한다."},
+        {"name": "실행 절차", "mode": "required", "criteria": "단계와 필요한 명령·변수가 자료에 근거한다. 명령이나 실행 결과를 추측하지 않는다."},
+        {"name": "결과 확인", "mode": "required", "criteria": "성공 기준과 확인 방법을 확보한다."},
+        {"name": "실패 시 대응 및 복구", "mode": "required", "criteria": "실패 대응·복구 방법을 확인한다. 미정 상태로 작성하는 것은 사용자와 합의한다."},
+        {"name": "참고 자료", "mode": "optional", "criteria": "실제 제공되거나 확인된 참고 자료가 있으면 포함한다. 없으면 섹션을 생략한다."}
+      ]
+    },
+    {
+      "id": "meeting",
+      "name": "회의록",
+      "file": "meeting.md",
+      "aliases": ["회의 기록", "회의 메모"],
+      "sections": [
+        {"name": "회의 정보", "mode": "required", "criteria": "상단 표의 일시·참석자를 확인한다. 모르는 값은 미정 표현에 합의한다."},
+        {"name": "논의 요점", "mode": "required", "criteria": "실제 논의한 내용이 있다."},
+        {"name": "결정 사항", "mode": "required", "criteria": "논의와 확정 결정을 구분한다. 결정이 없으면 없음을 확인한다."},
+        {"name": "후속 작업", "mode": "required", "criteria": "작업 유무를 확인한다. 작업이 있을 때만 담당·기한을 확인하고 미정 값의 표현에 합의한다."},
+        {"name": "미결 사항", "mode": "optional", "criteria": "자료에 남은 쟁점이 있으면 포함한다. 없으면 섹션을 생략한다."}
+      ]
+    },
+    {
+      "id": "report",
+      "name": "현황 보고",
+      "file": "report.md",
+      "aliases": ["현황보고", "진행 보고", "진행보고"],
+      "sections": [
+        {"name": "핵심 요약", "mode": "derived", "criteria": "확인된 현황과 후속 작업 및 제공된 선택 항목에서 요약한다."},
+        {"name": "현황 및 주요 지표", "mode": "required", "criteria": "현재 상태와 대상 범위가 분명하다. 수치가 있을 때만 기준·기간·단위를 확인한다."},
+        {"name": "분석 및 처리 흐름", "mode": "optional", "criteria": "실제 분석이나 흐름 설명이 필요한 경우 포함한다. 없으면 시각화 주석과 섹션을 함께 생략한다."},
+        {"name": "의사결정 요청", "mode": "optional", "criteria": "실제 결정 요청이 있는 경우 포함한다. 없으면 생략한다."},
+        {"name": "후속 작업", "mode": "required", "criteria": "다음 작업 또는 계획 없음·미정 상태를 확인한다. 작업이 있을 때만 담당·일정을 확인한다."}
+      ]
+    }
+  ]
+}

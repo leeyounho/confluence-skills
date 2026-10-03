@@ -29,6 +29,7 @@ class PackagingTests(unittest.TestCase):
                     skill / 'SKILL.md': 'Public skill',
                     skill / 'assets/templates/public.md': 'Public template',
                     skill / '.confluence-docs/templates/private.md': 'PRIVATE_TEST_DATA',
+                    skill / '.confluence-docs/drafts/private-state.json': '{"notes": "PRIVATE_TEST_DATA"}',
                     plugin / 'confluence-docs.config.json': '{"private": true}',
                 }
                 for path, content in files.items():
